@@ -1,22 +1,22 @@
-name: Executar lembretes semanais
+name: Testar variáveis
 
 on:
-  schedule:
-    - cron: '0 20 * * 5'  # 17h BRT toda sexta-feira (20 UTC)
   workflow_dispatch:
 
 jobs:
-  build:
+  test-vars:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Configurar Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - name: Instalar dependências
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Print variáveis sensíveis (com segurança)
         run: |
-          pip install -r requirements.txt
-      - name: Rodar script
-        run: |
-          python main.py
+          echo "TOKEN_API (inicio): ${TOKEN_API:0:5}..."
+          echo "TOKEN_API (tamanho): ${#TOKEN_API}"
+          echo "CLIENT_ID: ${CLIENT_ID}"
+          echo "SENDER_EMAIL: ${SENDER_EMAIL}"
+        env:
+          TOKEN_API: ${{ vars.TOKEN_API }}
+          CLIENT_ID: ${{ vars.CLIENT_ID }}
+          SENDER_EMAIL: ${{ vars.SENDER_EMAIL }}
