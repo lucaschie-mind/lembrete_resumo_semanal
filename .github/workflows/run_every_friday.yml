@@ -1,0 +1,22 @@
+name: Executar lembretes semanais
+
+on:
+  schedule:
+    - cron: '0 20 * * 5'  # 17h BRT toda sexta-feira (20 UTC)
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Instalar dependências
+        run: |
+          pip install -r requirements.txt
+      - name: Rodar script
+        run: |
+          python main.py
