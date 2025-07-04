@@ -92,7 +92,7 @@ def executar_envio():
     df_final.drop(columns=['employee_email'], inplace=True)
     df_final = df_final[df_final['gestor'].notna() & (df_final['gestor'].str.strip() != '')]
     df_final['summary'] = df_final['summary'].fillna('Não preencheu no período')
-    df_final.to_excel('df_final.xlsx', index=False)
+    #df_final.to_excel('df_final.xlsx', index=False)
 
     access_token = obter_access_token()
     df_lembrete = df_final[df_final['summary'] == 'Não preencheu no período']
